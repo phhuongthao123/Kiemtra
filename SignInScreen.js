@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import {
-    Image,
-    SafeAreaView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import PhoneInput from "react-native-phone-number-input"; // Thư viện để nhập số điện thoại với mã quốc gia
 
@@ -54,7 +54,7 @@ const SignInScreen = () => {
                 }
               }}
             >
-              <Text style={styles.buttonText}>Check</Text>
+              <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
           </View>
 
