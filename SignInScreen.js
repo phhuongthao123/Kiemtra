@@ -24,38 +24,39 @@ const SignInScreen = () => {
       <View style={styles.container}>
         {/* Phần hình ảnh trên */}
         <Image
-          source={require("./food.png")} // Thay đổi thành đường dẫn tới hình ảnh của bạn
+          source={require("./food.png")} // Đảm bảo đường dẫn đúng đến hình ảnh
           style={styles.image}
         />
         <SafeAreaView style={styles.wrapper}>
           {/* Tiêu đề */}
           <Text style={styles.title}>Get your groceries with nectar</Text>
 
-          {/* Thành phần nhập số điện thoại */}
-          <PhoneInput
-            ref={phoneInput}
-            defaultValue={value}
-            defaultCode="BD" // Quốc gia Bangladesh
-            layout="first"
-            onChangeText={(text) => setValue(text)}
-            onChangeFormattedText={(text) => setFormattedValue(text)}
-            withShadow
-            autoFocus
-          />
-
-          {/* Nút 'Check' để kiểm tra hợp lệ */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (phoneInput.current) {
-                const isValid = phoneInput.current.isValidNumber(value);
-                setValid(isValid);
-                setShowMessage(true);
-              }
-            }}
-          >
-            <Text style={styles.buttonText}>Check</Text>
-          </TouchableOpacity>
+          {/* Thành phần nhập số điện thoại với nút 'Check' */}
+          <View style={styles.inputContainer}>
+            <PhoneInput
+              ref={phoneInput}
+              defaultValue={value}
+              defaultCode="BD" // Quốc gia Bangladesh
+              layout="first"
+              onChangeText={(text) => setValue(text)}
+              onChangeFormattedText={(text) => setFormattedValue(text)}
+              withShadow
+              autoFocus
+              containerStyle={styles.phoneInput} // Căng rộng phone input
+            />
+            <TouchableOpacity
+              style={styles.checkButton}
+              onPress={() => {
+                if (phoneInput.current) {
+                  const isValid = phoneInput.current.isValidNumber(value);
+                  setValid(isValid);
+                  setShowMessage(true);
+                }
+              }}
+            >
+              <Text style={styles.buttonText}>Check</Text>
+            </TouchableOpacity>
+          </View>
 
           {/* Hiển thị trạng thái hợp lệ */}
           {showMessage && (
@@ -66,27 +67,23 @@ const SignInScreen = () => {
             </View>
           )}
 
-          {/* Nút tiếp tục với Google */}
-          <TouchableOpacity style={styles.socialButtonGoogle}>
-            <View style={styles.socialButtonContent}>
-              <Image
-                source={require("./google.png")} // Thay đổi thành đường dẫn tới logo Google của bạn
-                style={styles.socialIcon}
-              />
-              <Text style={styles.socialButtonText}>Continue with Google</Text>
-            </View>
-          </TouchableOpacity>
+          {/* 3 Nút xã hội với khoảng cách đều và bo góc */}
+          <View style={styles.socialButtonContainer}>
+            {/* Facebook button */}
+            <TouchableOpacity style={styles.socialButtonFacebook}>
+              <View style={styles.socialButtonContent}>
+                <Text style={styles.socialButtonText}>Continue with Facebook</Text>
+              </View>
+            </TouchableOpacity>
 
-          {/* Nút tiếp tục với Facebook */}
-          <TouchableOpacity style={styles.socialButtonFacebook}>
-            <View style={styles.socialButtonContent}>
-              <Image
-                source={require("./facebook.png")} // Thay đổi thành đường dẫn tới logo Facebook của bạn
-                style={styles.socialIcon}
-              />
-              <Text style={styles.socialButtonText}>Continue with Facebook</Text>
-            </View>
-          </TouchableOpacity>
+            {/* Google button */}
+            <TouchableOpacity style={styles.socialButtonGoogle}>
+              <View style={styles.socialButtonContent}>
+                <Text style={styles.socialButtonText}>Continue with Google</Text>
+              </View>
+            </TouchableOpacity>
+
+          </View>
         </SafeAreaView>
       </View>
     </>
@@ -108,19 +105,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 20,
+
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 50,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
   },
-  button: {
+  phoneInput: {
+    flex: 1, // Đảm bảo phone input kéo dài hết chiều rộng
+  },
+  checkButton: {
     backgroundColor: "#3498db",
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
-    marginVertical: 10,
+    marginLeft: 10, // Khoảng cách giữa input và button
   },
   buttonText: {
     color: "#fff",
@@ -141,34 +147,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  socialButtonContainer: {
+    flexDirection: "column", // Đưa nút lên xuống theo chiều dọc
+    justifyContent: "center", // Căn giữa
+    alignItems: "center", // Căn giữa
+    marginTop: 20,
+  },
   socialButtonGoogle: {
     backgroundColor: "#4285F4",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-    marginVertical: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+    elevation: 2,
+    marginTop: 10, // Tạo khoảng cách giữa nút Facebook và Google
   },
   socialButtonFacebook: {
     backgroundColor: "#3b5998",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-    marginVertical: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+    elevation: 2,
   },
   socialButtonContent: {
     flexDirection: "row",
     alignItems: "center",
-    
-  },
-  socialIcon: {
-    width: 11,
-    height: 24,
-    marginRight: 10,
   },
   socialButtonText: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+    width:200
   },
 });
 
